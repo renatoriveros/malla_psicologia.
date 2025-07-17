@@ -1,121 +1,620 @@
-// Definición completa de los ramos con prerequisitos y qué desbloquean
+document.addEventListener('DOMContentLoaded', function() {
+    // Datos de la malla curricular
+    const curriculum = [
+        // Año 1
+        {
+            semester: 1,
+            year: 1,
+            courses: [
+                {
+                    code: "PSI101",
+                    name: "Introducción a la psicología",
+                    unlocks: ["PSI201", "TIN101", "TEP101", "TEP102"],
+                    requirements: []
+                },
+                {
+                    code: "PSI102",
+                    name: "Fundamentos Socioculturales de la psicología",
+                    unlocks: ["PSI202", "TIN101", "TEP101", "TEP102"],
+                    requirements: []
+                },
+                {
+                    code: "PSI103",
+                    name: "Fundamentos biológicos del comportamiento humano",
+                    unlocks: ["PSI203", "TIN101", "TEP101", "TEP102"],
+                    requirements: []
+                },
+                {
+                    code: "PSI104",
+                    name: "Filosofía y psicología",
+                    unlocks: ["TIN101", "TEP101", "TEP102"],
+                    requirements: []
+                },
+                {
+                    code: "ING101",
+                    name: "Inglés 1",
+                    unlocks: ["ING102", "TIN101", "TEP101", "TEP102"],
+                    requirements: []
+                },
+                {
+                    code: "HFI101",
+                    name: "Habilidades de formación inicial",
+                    unlocks: ["TIN101", "TEP101", "TEP102"],
+                    requirements: []
+                }
+            ]
+        },
+        {
+            semester: 2,
+            year: 1,
+            courses: [
+                {
+                    code: "PSI201",
+                    name: "Procesos Psicológicos",
+                    unlocks: ["PSI301", "PSI302", "TIN101", "TEP101", "TEP102"],
+                    requirements: ["PSI101"]
+                },
+                {
+                    code: "PSI202",
+                    name: "Teoría de Psicología social",
+                    unlocks: ["PSI303", "TEP101", "TEP102"],
+                    requirements: ["PSI102"]
+                },
+                {
+                    code: "PSI203",
+                    name: "Neurociencia cognitiva y del desarrollo",
+                    unlocks: ["PSI304", "TEP101", "TEP102"],
+                    requirements: ["PSI103"]
+                },
+                {
+                    code: "PSI204",
+                    name: "Modelos sistémicos",
+                    unlocks: ["TIN101", "TEP101", "TEP102"],
+                    requirements: []
+                },
+                {
+                    code: "MET101",
+                    name: "Metodología de la investigación",
+                    unlocks: ["PSI501", "TIN101", "TEP101", "TEP102"],
+                    requirements: []
+                },
+                {
+                    code: "ING102",
+                    name: "Inglés 2",
+                    unlocks: ["ING103", "TIN101", "TEP101", "TEP102"],
+                    requirements: ["ING101"]
+                }
+            ]
+        },
+        // Año 2
+        {
+            semester: 3,
+            year: 2,
+            courses: [
+                {
+                    code: "PSI301",
+                    name: "Personalidad",
+                    unlocks: ["PSI401", "PSI402", "TIN101", "TEP101", "TEP102"],
+                    requirements: ["PSI201"]
+                },
+                {
+                    code: "PSI302",
+                    name: "Psicología del desarrollo",
+                    unlocks: ["PSI403", "TIN101", "TEP101", "TEP102"],
+                    requirements: ["PSI201"]
+                },
+                {
+                    code: "PSI303",
+                    name: "Psicología social aplicada",
+                    unlocks: ["PSI404", "PSI405", "PSI406", "TEP101", "TEP102"],
+                    requirements: ["PSI202"]
+                },
+                {
+                    code: "PSI304",
+                    name: "Neurociencias afectiva y social",
+                    unlocks: ["TIN101"],
+                    requirements: ["PSI203"]
+                },
+                {
+                    code: "MOD301",
+                    name: "Modelos cognitivos conductual",
+                    unlocks: ["TIN101", "TEP101", "TEP102"],
+                    requirements: []
+                },
+                {
+                    code: "ING103",
+                    name: "Inglés 3",
+                    unlocks: ["TIN101", "TEP101", "TEP102"],
+                    requirements: ["ING102"]
+                }
+            ]
+        },
+        {
+            semester: 4,
+            year: 2,
+            courses: [
+                {
+                    code: "PSI401",
+                    name: "Psicopatología",
+                    unlocks: ["PSI502", "TEP101", "TEP102"],
+                    requirements: ["PSI301"]
+                },
+                {
+                    code: "PSI402",
+                    name: "Técnicas de evaluación psicológica",
+                    unlocks: ["PSI503", "TEP101", "TEP102"],
+                    requirements: ["PSI301"]
+                },
+                {
+                    code: "PSI403",
+                    name: "Psicología del desarrollo 2",
+                    unlocks: ["PSI504", "TEP101", "TEP102"],
+                    requirements: ["PSI302"]
+                },
+                {
+                    code: "MOD401",
+                    name: "Modelos psicoanalíticos",
+                    unlocks: ["TEP101", "TEP102"],
+                    requirements: []
+                },
+                {
+                    code: "MOD402",
+                    name: "Modelo humanista experiencial",
+                    unlocks: ["TEP101", "TEP102"],
+                    requirements: []
+                },
+                {
+                    code: "TIN101",
+                    name: "Taller de integración 1",
+                    unlocks: ["TEP101", "TEP102"],
+                    requirements: ["PSI101", "PSI102", "PSI103", "PSI104", "ING101", "HFI101", "PSI201", "PSI202", "PSI203", "PSI204", "MET101", "ING102"]
+                },
+                {
+                    code: "EFI101",
+                    name: "Electivo de formación integral 1",
+                    unlocks: ["EFI102", "TEP101", "TEP102"],
+                    requirements: []
+                }
+            ]
+        },
+        // Año 3
+        {
+            semester: 5,
+            year: 3,
+            courses: [
+                {
+                    code: "PSI501",
+                    name: "Métodos cuantitativos en psicología",
+                    unlocks: ["PSI602", "TEP101", "TEP102"],
+                    requirements: ["MET101"]
+                },
+                {
+                    code: "PSI502",
+                    name: "Psiquiatría",
+                    unlocks: ["TEP101", "TEP102"],
+                    requirements: ["PSI401"]
+                },
+                {
+                    code: "PSI503",
+                    name: "Diagnóstico clínico adulto 1",
+                    unlocks: ["PSI701", "PSI703", "TEP101", "TEP102"],
+                    requirements: ["PSI402"]
+                },
+                {
+                    code: "PSI504",
+                    name: "Clínica infanto juvenil",
+                    unlocks: ["PSI702", "TEP101", "TEP102"],
+                    requirements: ["PSI403"]
+                },
+                {
+                    code: "PSI505",
+                    name: "Psicología del trabajo y las organizaciones",
+                    unlocks: ["PSI506", "TEP101", "TEP102"],
+                    requirements: ["PSI303"]
+                },
+                {
+                    code: "PSI506",
+                    name: "Intervenciones en contextos organizacionales",
+                    unlocks: ["TIN201", "TEP101", "TEP102"],
+                    requirements: ["PSI505"]
+                },
+                {
+                    code: "PSI507",
+                    name: "Psicología educacional",
+                    unlocks: ["PSI603", "TEP101", "TEP102"],
+                    requirements: ["PSI303"]
+                },
+                {
+                    code: "EFI102",
+                    name: "Electivo de formación integral 2",
+                    unlocks: ["TEP101", "TEP102"],
+                    requirements: ["EFI101"]
+                }
+            ]
+        },
+        {
+            semester: 6,
+            year: 3,
+            courses: [
+                {
+                    code: "PSI601",
+                    name: "Intervención en psicología educativa",
+                    unlocks: ["TIN201", "TEP101", "TEP102"],
+                    requirements: ["PSI507"]
+                },
+                {
+                    code: "PSI602",
+                    name: "Métodos cualitativos en psicología",
+                    unlocks: ["PSI801", "TEP101", "TEP102"],
+                    requirements: ["PSI501"]
+                },
+                {
+                    code: "PSI603",
+                    name: "Psicodiagnóstico infanto juvenil",
+                    unlocks: ["PSI802", "TIN201", "TEP101", "TEP102"],
+                    requirements: ["PSI504"]
+                },
+                {
+                    code: "PSI604",
+                    name: "Introducción a la psicología clínica",
+                    unlocks: ["PSI803", "TIN201", "TEP101", "TEP102"],
+                    requirements: ["PSI503"]
+                },
+                {
+                    code: "PSI605",
+                    name: "Diagnóstico clínico adulto 2",
+                    unlocks: ["TIN201", "TEP101", "TEP102"],
+                    requirements: ["PSI503"]
+                }
+            ]
+        },
+        // Año 4
+        {
+            semester: 7,
+            year: 4,
+            courses: [
+                {
+                    code: "PSI701",
+                    name: "Psicología jurídica",
+                    unlocks: ["TEP101", "TEP102"],
+                    requirements: ["PSI503"]
+                },
+                {
+                    code: "PSI702",
+                    name: "Psicoterapia infanto juvenil",
+                    unlocks: ["TEP101", "TEP102"],
+                    requirements: ["PSI603"]
+                },
+                {
+                    code: "PSI703",
+                    name: "Intervenciones en psicología clínica",
+                    unlocks: ["TIN201", "TEP101", "TEP102"],
+                    requirements: ["PSI604"]
+                },
+                {
+                    code: "PSI704",
+                    name: "Psicología comunitaria",
+                    unlocks: ["TEP101", "TEP102"],
+                    requirements: []
+                },
+                {
+                    code: "ESE101",
+                    name: "Electivo de especialidad 1",
+                    unlocks: ["TEP101", "TEP102"],
+                    requirements: []
+                },
+                {
+                    code: "TIN201",
+                    name: "Taller de integración 2",
+                    unlocks: ["TEP101", "TEP102"],
+                    requirements: ["PSI506", "PSI601", "PSI603", "PSI604", "PSI605", "PSI703"]
+                }
+            ]
+        },
+        {
+            semester: 8,
+            year: 4,
+            courses: [
+                {
+                    code: "PSI801",
+                    name: "Seminario de investigación 1",
+                    unlocks: ["PSI901", "EGR101", "TEP101", "TEP102"],
+                    requirements: ["PSI602"]
+                },
+                {
+                    code: "PSI802",
+                    name: "Examen de grado",
+                    unlocks: ["PPR101"],
+                    requirements: ["PSI801"]
+                },
+                {
+                    code: "ESE102",
+                    name: "Electivo de especialidad 2",
+                    unlocks: ["TEP101", "TEP102"],
+                    requirements: []
+                }
+            ]
+        },
+        // Año 5
+        {
+            semester: 9,
+            year: 5,
+            courses: [
+                {
+                    code: "PSI901",
+                    name: "Seminario de investigación 2",
+                    unlocks: ["PPR101"],
+                    requirements: ["PSI801"]
+                },
+                {
+                    code: "TEP101",
+                    name: "Taller de especialización 1",
+                    unlocks: ["PPR101"],
+                    requirements: [] // Se manejará especial en el código
+                },
+                {
+                    code: "TEP102",
+                    name: "Taller de especialización 2",
+                    unlocks: ["PPR101"],
+                    requirements: [] // Se manejará especial en el código
+                },
+                {
+                    code: "EGR101",
+                    name: "Examen de grado",
+                    unlocks: ["PPR101"],
+                    requirements: ["PSI801"]
+                }
+            ]
+        },
+        {
+            semester: 10,
+            year: 5,
+            courses: [
+                {
+                    code: "PPR101",
+                    name: "Práctica profesional",
+                    unlocks: [],
+                    requirements: ["TEP101", "TEP102", "EGR101", "PSI901"]
+                },
+                {
+                    code: "ETI101",
+                    name: "Examen de título",
+                    unlocks: [],
+                    requirements: ["PPR101"]
+                }
+            ]
+        }
+    ];
 
-const ramos = [
-  // Año 1, Semestre 1
-  { id: 'introduccion_psicologia', nombre: 'Introducción a la Psicología', semestre: 1, desbloquea: ['procesos_psicologicos', 'taller_integracion_1', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'fundamentos_socioculturales', nombre: 'Fundamentos Socioculturales de la Psicología', semestre: 1, desbloquea: ['teoria_psicologia_social', 'taller_integracion_1', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'fundamentos_biologicos', nombre: 'Fundamentos Biológicos del Comportamiento Humano', semestre: 1, desbloquea: ['neurociencia_cognitiva', 'taller_integracion_1', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'filosofia_psicologia', nombre: 'Filosofía y Psicología', semestre: 1, desbloquea: ['taller_integracion_1', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'ingles_1', nombre: 'Inglés 1', semestre: 1, desbloquea: ['ingles_2', 'taller_integracion_1', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'habilidades_formacion_inicial', nombre: 'Habilidades de Formación Inicial', semestre: 1, desbloquea: ['taller_integracion_1', 'taller_esp_1', 'taller_esp_2'] },
+    // Estado de la aplicación
+    const state = {
+        completedCourses: JSON.parse(localStorage.getItem('completedCourses')) || [],
+        viewMode: 'semester' // 'semester' o 'grid'
+    };
 
-  // Año 1, Semestre 2
-  { id: 'modelos_sistemicos', nombre: 'Modelos Sistémicos', semestre: 2, desbloquea: ['taller_integracion_1', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'procesos_psicologicos', nombre: 'Procesos Psicológicos', semestre: 2, desbloquea: ['personalidad', 'psicologia_desarrollo', 'taller_integracion_1', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'teoria_psicologia_social', nombre: 'Teoría Psicología Social', semestre: 2, desbloquea: ['psicologia_social_aplicada', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'neurociencia_cognitiva', nombre: 'Neurociencia Cognitiva y del Desarrollo', semestre: 2, desbloquea: ['neurociencias_afectiva_social', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'metodologia_investigacion', nombre: 'Metodología de la Investigación', semestre: 2, desbloquea: ['metodos_cuantitativos', 'taller_integracion_1', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'ingles_2', nombre: 'Inglés 2', semestre: 2, desbloquea: ['ingles_3', 'taller_integracion_1', 'taller_esp_1', 'taller_esp_2'] },
+    // Elementos del DOM
+    const semesterContainer = document.getElementById('semester-container');
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+    const toggleViewBtn = document.getElementById('toggle-view');
+    const resetBtn = document.getElementById('reset-btn');
+    const courseModal = document.getElementById('course-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalSemester = document.getElementById('modal-semester');
+    const modalRequirements = document.getElementById('modal-requirements');
+    const modalUnlocks = document.getElementById('modal-unlocks');
+    const modalStatus = document.getElementById('modal-status');
+    const toggleCourseBtn = document.getElementById('toggle-course');
+    const closeModalBtn = document.querySelector('.close-modal');
 
-  // Año 2, Semestre 3
-  { id: 'modelos_cognitivos_conductual', nombre: 'Modelos Cognitivos Conductual', semestre: 3, desbloquea: ['taller_integracion_1', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'personalidad', nombre: 'Personalidad', semestre: 3, desbloquea: ['psicopatologia', 'tecnicas_evaluacion_psicologica', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'psicologia_desarrollo', nombre: 'Psicología del Desarrollo', semestre: 3, desbloquea: ['psicologia_desarrollo_2', 'taller_integracion_1', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'psicologia_social_aplicada', nombre: 'Psicología Social Aplicada', semestre: 3, desbloquea: ['psicologia_educacional', 'psicologia_trabajo', 'psicologia_juridica', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'neurociencias_afectiva_social', nombre: 'Neurociencias Afectiva y Social', semestre: 3, desbloquea: ['taller_integracion_1'] },
-  { id: 'ingles_3', nombre: 'Inglés 3', semestre: 3, desbloquea: ['taller_integracion_1', 'taller_esp_1', 'taller_esp_2'] },
+    // Variables temporales
+    let currentCourse = null;
 
-  // Año 2, Semestre 4
-  { id: 'modelos_psicoanaliticos', nombre: 'Modelos Psicoanalíticos', semestre: 4, desbloquea: ['taller_esp_1', 'taller_esp_2'] },
-  { id: 'modelo_humanista_experiencial', nombre: 'Modelo Humanista Experiencial', semestre: 4, desbloquea: ['taller_esp_1', 'taller_esp_2'] },
-  { id: 'psicologia_desarrollo_2', nombre: 'Psicología del Desarrollo 2', semestre: 4, desbloquea: ['clinica_infanto_juvenil', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'psicopatologia', nombre: 'Psicopatología', semestre: 4, desbloquea: ['psiquiatria', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'taller_integracion_1', nombre: 'Taller de Integración 1', semestre: 4, desbloquea: ['taller_esp_1', 'taller_esp_2'] },
-  { id: 'electivo_formacion_integral_1', nombre: 'Electivo de Formación Integral 1', semestre: 4, desbloquea: ['electivo_formacion_integral_1', 'taller_esp_1', 'taller_esp_2'] },
+    // Inicializar la aplicación
+    function init() {
+        renderSemesters();
+        updateProgress();
+        setupEventListeners();
+    }
 
-  // Año 3, Semestre 5
-  { id: 'tecnicas_evaluacion_psicologica', nombre: 'Técnicas de Evaluación Psicológica', semestre: 5, desbloquea: ['diagnostico_clinico_adulto_1', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'psiquiatria', nombre: 'Psiquiatría', semestre: 5, desbloquea: ['taller_esp_1', 'taller_esp_2'] },
-  { id: 'psicologia_trabajo', nombre: 'Psicología del Trabajo y las Organizaciones', semestre: 5, desbloquea: ['intervenciones_contextos_organizacionales', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'psicologia_educacional', nombre: 'Psicología Educacional', semestre: 5, desbloquea: ['taller_esp_1', 'taller_esp_2'] },
-  { id: 'metodos_cuantitativos', nombre: 'Métodos Cuantitativos en Psicología', semestre: 5, desbloquea: ['metodos_cualitativos', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'electivo_formacion_integral_2', nombre: 'Electivo de Formación Integral 2', semestre: 5, desbloquea: ['taller_esp_1', 'taller_esp_2'] },
+    // Renderizar los semestres
+    function renderSemesters() {
+        semesterContainer.innerHTML = '';
+        
+        curriculum.forEach(semesterData => {
+            const semesterEl = document.createElement('div');
+            semesterEl.className = 'semester';
+            
+            const titleEl = document.createElement('h3');
+            titleEl.className = 'semester-title';
+            titleEl.textContent = `Año ${semesterData.year} - Semestre ${semesterData.semester}`;
+            
+            const coursesListEl = document.createElement('div');
+            coursesListEl.className = 'courses-list';
+            
+            semesterData.courses.forEach(course => {
+                const courseEl = document.createElement('div');
+                courseEl.className = 'course';
+                
+                // Verificar si el curso está completado
+                const isCompleted = state.completedCourses.includes(course.code);
+                if (isCompleted) {
+                    courseEl.classList.add('completed');
+                }
+                
+                // Verificar si el curso está bloqueado
+                const isLocked = !isCourseUnlocked(course);
+                if (isLocked && !isCompleted) {
+                    courseEl.classList.add('locked');
+                }
+                
+                courseEl.innerHTML = `
+                    <div class="course-name">${course.name}</div>
+                    <div class="course-code">${course.code}</div>
+                `;
+                
+                // Solo agregar evento click si no está bloqueado
+                if (!isLocked || isCompleted) {
+                    courseEl.addEventListener('click', () => openCourseModal(course, semesterData));
+                }
+                
+                coursesListEl.appendChild(courseEl);
+            });
+            
+            semesterEl.appendChild(titleEl);
+            semesterEl.appendChild(coursesListEl);
+            semesterContainer.appendChild(semesterEl);
+        });
+    }
 
-  // Año 3, Semestre 6
-  { id: 'diagnostico_clinico_adulto_1', nombre: 'Diagnóstico Clínico Adulto 1', semestre: 6, desbloquea: ['diagnostico_clinico_adulto_2', 'introduccion_psicologia_clinica', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'clinica_infanto_juvenil', nombre: 'Clínica Infanto Juvenil', semestre: 6, desbloquea: ['psicodiagnostico_infanto_juvenil', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'intervenciones_contextos_organizacionales', nombre: 'Intervenciones en Contextos Organizacionales', semestre: 6, desbloquea: ['taller_integracion_2', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'intervencion_psicologia_educativa', nombre: 'Intervención en Psicología Educativa', semestre: 6, desbloquea: ['taller_integracion_2', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'metodos_cualitativos', nombre: 'Métodos Cualitativos en Psicología', semestre: 6, desbloquea: ['seminario_investigacion_1', 'taller_esp_1', 'taller_esp_2'] },
+    // Verificar si un curso está desbloqueado
+    function isCourseUnlocked(course) {
+        // Los talleres de especialización tienen requisitos especiales
+        if (course.code === 'TEP101' || course.code === 'TEP102') {
+            return areAllCoursesCompleted();
+        }
+        
+        if (course.requirements.length === 0) return true;
+        
+        return course.requirements.every(req => 
+            state.completedCourses.includes(req)
+        );
+    }
 
-  // Año 4, Semestre 7
-  { id: 'diagnostico_clinico_adulto_2', nombre: 'Diagnóstico Clínico Adulto 2', semestre: 7, desbloquea: ['taller_integracion_2', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'psicodiagnostico_infanto_juvenil', nombre: 'Psicodiagnóstico Infanto Juvenil', semestre: 7, desbloquea: ['psicoterapia_infanto_juvenil', 'taller_integracion_2', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'introduccion_psicologia_clinica', nombre: 'Introducción a la Psicología Clínica', semestre: 7, desbloquea: ['intervenciones_psicologia_clinica', 'taller_integracion_2', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'psicologia_juridica', nombre: 'Psicología Jurídica', semestre: 7, desbloquea: ['taller_esp_1', 'taller_esp_2'] },
-  { id: 'psicologia_comunitaria', nombre: 'Psicología Comunitaria', semestre: 7, desbloquea: ['taller_esp_1', 'taller_esp_2'] },
-  { id: 'electivo_especialidad_1', nombre: 'Electivo de Especialidad 1', semestre: 7, desbloquea: ['taller_esp_1', 'taller_esp_2'] },
+    // Verificar si todos los cursos hasta el semestre 8 están completados (para TEP)
+    function areAllCoursesCompleted() {
+        const coursesUntilSemester8 = [];
+        
+        curriculum.forEach(semester => {
+            if (semester.semester <= 8) {
+                semester.courses.forEach(course => {
+                    coursesUntilSemester8.push(course.code);
+                });
+            }
+        });
+        
+        return coursesUntilSemester8.every(code => 
+            state.completedCourses.includes(code)
+        );
+    }
 
-  // Año 4, Semestre 8
-  { id: 'psicoterapia_infanto_juvenil', nombre: 'Psicoterapia Infanto Juvenil', semestre: 8, desbloquea: ['taller_esp_1', 'taller_esp_2'] },
-  { id: 'intervenciones_psicologia_clinica', nombre: 'Intervenciones en Psicología Clínica', semestre: 8, desbloquea: ['taller_integracion_2', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'seminario_investigacion_1', nombre: 'Seminario de Investigación 1', semestre: 8, desbloquea: ['seminario_investigacion_2', 'examen_grado', 'taller_esp_1', 'taller_esp_2'] },
-  { id: 'electivo_especialidad_2', nombre: 'Electivo de Especialidad 2', semestre: 8, desbloquea: ['taller_esp_1', 'taller_esp_2'] },
-  { id: 'taller_integracion_2', nombre: 'Taller de Integración 2', semestre: 8, desbloquea: ['taller_esp_1', 'taller_esp_2'] },
+    // Abrir el modal del curso
+    function openCourseModal(course, semesterData) {
+        currentCourse = course;
+        
+        modalTitle.textContent = course.name;
+        modalSemester.textContent = `Año ${semesterData.year} - Semestre ${semesterData.semester}`;
+        
+        // Mostrar requisitos
+        if (course.requirements.length > 0) {
+            const reqNames = course.requirements.map(code => {
+                const reqCourse = findCourseByCode(code);
+                return reqCourse ? reqCourse.name : code;
+            });
+            modalRequirements.textContent = reqNames.join(', ');
+        } else {
+            modalRequirements.textContent = 'Ninguno';
+        }
+        
+        // Mostrar cursos que desbloquea
+        if (course.unlocks.length > 0) {
+            const unlockNames = course.unlocks.map(code => {
+                const unlockCourse = findCourseByCode(code);
+                return unlockCourse ? unlockCourse.name : code;
+            });
+            modalUnlocks.textContent = unlockNames.join(', ');
+        } else {
+            modalUnlocks.textContent = 'Ninguno';
+        }
+        
+        // Mostrar estado
+        const isCompleted = state.completedCourses.includes(course.code);
+        modalStatus.textContent = isCompleted ? 'Aprobado' : 'Pendiente';
+        modalStatus.style.color = isCompleted ? 'var(--completed-color)' : '#ff6b9d';
+        
+        // Configurar botón
+        toggleCourseBtn.textContent = isCompleted ? 'Marcar como pendiente' : 'Marcar como aprobado';
+        
+        // Mostrar modal
+        courseModal.classList.add('active');
+    }
 
-  // Año 5, Semestre 9
-  { id: 'seminario_investigacion_2', nombre: 'Seminario de Investigación 2', semestre: 9, desbloquea: [] },
-  { id: 'taller_esp_1', nombre: 'Taller de Especialización 1', semestre: 9, desbloquea: ['practica_profesional'], condicionEspecial: true },
-  { id: 'taller_esp_2', nombre: 'Taller de Especialización 2', semestre: 9, desbloquea: ['practica_profesional'], condicionEspecial: true },
-  { id: 'examen_grado', nombre: 'Examen de Grado', semestre: 9, desbloquea: ['practica_profesional'] },
+    // Encontrar curso por código
+    function findCourseByCode(code) {
+        for (const semester of curriculum) {
+            for (const course of semester.courses) {
+                if (course.code === code) {
+                    return course;
+                }
+            }
+        }
+        return null;
+    }
 
-  // Año 5, Semestre 10
-  { id: 'practica_profesional', nombre: 'Práctica Profesional', semestre: 10, desbloquea: [] },
-  { id: 'examen_titulo', nombre: 'Examen de Título', semestre: 10, desbloquea: [] }
-];
+    // Actualizar barra de progreso
+    function updateProgress() {
+        const totalCourses = curriculum.reduce((acc, semester) => acc + semester.courses.length, 0);
+        const completedCount = state.completedCourses.length;
+        const percentage = Math.round((completedCount / totalCourses) * 100);
+        
+        progressBar.style.width = `${percentage}%`;
+        progressText.textContent = `${percentage}% completado (${completedCount}/${totalCourses} cursos)`;
+    }
 
-// Set para almacenar aprobados
-const completados = new Set();
+    // Configurar event listeners
+    function setupEventListeners() {
+        // Cerrar modal
+        closeModalBtn.addEventListener('click', () => {
+            courseModal.classList.remove('active');
+        });
+        
+        // Cerrar modal al hacer clic fuera
+        courseModal.addEventListener('click', (e) => {
+            if (e.target === courseModal) {
+                courseModal.classList.remove('active');
+            }
+        });
+        
+        // Alternar estado del curso
+        toggleCourseBtn.addEventListener('click', () => {
+            if (!currentCourse) return;
+            
+            const index = state.completedCourses.indexOf(currentCourse.code);
+            
+            if (index === -1) {
+                // Agregar a completados
+                state.completedCourses.push(currentCourse.code);
+            } else {
+                // Quitar de completados
+                state.completedCourses.splice(index, 1);
+            }
+            
+            // Guardar en localStorage
+            localStorage.setItem('completedCourses', JSON.stringify(state.completedCourses));
+            
+            // Actualizar UI
+            renderSemesters();
+            updateProgress();
+            courseModal.classList.remove('active');
+        });
+        
+        // Cambiar vista
+        toggleViewBtn.addEventListener('click', () => {
+            // Implementar cambio de vista si es necesario
+            alert('Funcionalidad de cambio de vista en desarrollo');
+        });
+        
+        // Reiniciar progreso
+        resetBtn.addEventListener('click', () => {
+            if (confirm('¿Estás seguro de que quieres reiniciar todo tu progreso?')) {
+                state.completedCourses = [];
+                localStorage.setItem('completedCourses', JSON.stringify([]));
+                renderSemesters();
+                updateProgress();
+            }
+        });
+    }
 
-// Función para crear y mostrar la malla
-function crearMalla() {
-  const contenedor = document.getElementById('malla');
-  contenedor.innerHTML = '';
-
-  const semestres = [...new Set(ramos.map(r => r.semestre))];
-
-  semestres.forEach(sem => {
-    const divSem = document.createElement('div');
-    divSem.className = 'semestre';
-    divSem.innerHTML = `<h2>Semestre ${sem}</h2><div class="ramos-container" id="sem${sem}"></div>`;
-    contenedor.appendChild(divSem);
-  });
-
-  ramos.forEach(ramo => {
-    const btn = document.createElement('button');
-    btn.id = ramo.id;
-    btn.className = 'ramo bloqueado';
-    btn.innerText = ramo.nombre;
-    btn.disabled = true;
-    btn.onclick = () => aprobarRamo(ramo.id);
-    document.getElementById(`sem${ramo.semestre}`).appendChild(btn);
-  });
-
-  // Desbloquear primeros semestres
-  ramos.filter(r => r.semestre === 1).forEach(r => desbloquearRamo(r.id));
-}
-
-// Función para aprobar un ramo
-function aprobarRamo(id) {
-  const ramo = ramos.find(r => r.id === id);
-  if (!ramo) return;
-
-  // Si ya está completado o bloqueado
-  if (completados.has(id)) return;
-
-  const btn = document.getElementById(id);
-  if (!btn || btn.disabled) return;
-
-  // Marcar como completado
- 
-
+    // Iniciar la aplicación
+    init();
+});
