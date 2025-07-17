@@ -101,7 +101,6 @@ button:hover {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 }
 
-/* Nueva estructura de columnas por año */
 .years-container {
     display: flex;
     gap: 20px;
@@ -184,7 +183,6 @@ button:hover {
     opacity: 0.8;
 }
 
-/* Modal */
 .course-modal {
     position: fixed;
     top: 0;
@@ -238,7 +236,6 @@ button:hover {
     margin-top: 15px;
 }
 
-/* Scroll personalizado para años */
 .years-container::-webkit-scrollbar {
     height: 8px;
 }
