@@ -25,7 +25,7 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     background-color: white;
     padding: 30px;
@@ -101,42 +101,59 @@ button:hover {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 }
 
-.semester-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px;
+/* Nueva estructura de columnas por año */
+.years-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 20px;
 }
 
-.semester {
+.year-column {
+    min-width: 300px;
     background-color: white;
     border-radius: 10px;
-    padding: 20px;
+    padding: 15px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
     border: 1px solid var(--border-color);
 }
 
-.semester-title {
+.year-title {
     color: var(--primary-dark);
+    text-align: center;
     margin-bottom: 15px;
     padding-bottom: 10px;
     border-bottom: 2px solid var(--secondary-color);
     font-size: 1.2rem;
 }
 
+.semester {
+    margin-bottom: 20px;
+}
+
+.semester-title {
+    color: var(--primary-color);
+    font-size: 1rem;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
 .courses-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .course {
-    padding: 12px 15px;
+    padding: 10px 12px;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s;
     position: relative;
     overflow: hidden;
     border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
 }
 
 .course:hover {
@@ -159,13 +176,15 @@ button:hover {
 .course-name {
     font-weight: 500;
     margin-bottom: 3px;
+    font-size: 0.9rem;
 }
 
 .course-code {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     opacity: 0.8;
 }
 
+/* Modal */
 .course-modal {
     position: fixed;
     top: 0;
@@ -219,16 +238,31 @@ button:hover {
     margin-top: 15px;
 }
 
-.hidden {
-    display: none;
+/* Scroll personalizado para años */
+.years-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.years-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.years-container::-webkit-scrollbar-thumb {
+    background: var(--primary-light);
+    border-radius: 10px;
+}
+
+.years-container::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
 }
 
 @media (max-width: 768px) {
-    .semester-container {
-        grid-template-columns: 1fr;
-    }
-    
     .container {
         padding: 15px;
+    }
+    
+    .year-column {
+        min-width: 280px;
     }
 }
